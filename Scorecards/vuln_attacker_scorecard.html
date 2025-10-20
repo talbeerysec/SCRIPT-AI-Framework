@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCRIPT Scorecard - Vulnerability Exploitation (Attacker)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .script-container {
+            background: #f5f5dc;
+            width: 100%;
+            max-width: 750px;
+            padding: 40px 50px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+            position: relative;
+            border: 3px solid #333;
+        }
+        
+        .holes {
+            position: absolute;
+            left: 20px;
+            top: 70px;
+            bottom: 70px;
+            width: 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+        }
+        
+        .hole {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #333;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        .title {
+            text-align: center;
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 8px;
+            color: #1a1a1a;
+        }
+        
+        .subtitle {
+            text-align: center;
+            font-size: 12px;
+            margin-bottom: 8px;
+            color: #555;
+            letter-spacing: 1px;
+        }
+        
+        .scoring-guide {
+            text-align: center;
+            font-size: 10px;
+            margin-bottom: 5px;
+            color: #666;
+            font-style: italic;
+            padding: 6px;
+            background: rgba(255,255,255,0.5);
+            border-radius: 3px;
+        }
+        
+        .task-title {
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #27ae60;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .scene-header {
+            font-weight: bold;
+            text-transform: uppercase;
+            margin: 20px 0 12px 0;
+            font-size: 13px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 4px;
+            color: #1a1a1a;
+            letter-spacing: 1px;
+        }
+        
+        .character-block {
+            margin: 10px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+        
+        .icon {
+            font-size: 26px;
+            min-width: 35px;
+            text-align: center;
+            margin-top: -3px;
+        }
+        
+        .character-content {
+            flex: 1;
+        }
+        
+        .character {
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 13px;
+            color: #2c3e50;
+            margin-bottom: 3px;
+        }
+        
+        .dialogue {
+            line-height: 1.4;
+            font-size: 11px;
+            color: #2c3e50;
+            margin-bottom: 6px;
+        }
+        
+        .score-bar-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 5px;
+        }
+        
+        .score-label {
+            font-size: 12px;
+            font-weight: bold;
+            min-width: 60px;
+            color: #555;
+        }
+        
+        .score-bar {
+            flex: 1;
+            height: 16px;
+            background: #e0e0e0;
+            border: 2px solid #333;
+            border-radius: 3px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .score-fill {
+            height: 100%;
+            background: #27ae60;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 10px;
+            color: white;
+            transition: width 0.5s ease;
+        }
+        
+        .score-value {
+            font-weight: bold;
+            font-size: 12px;
+            min-width: 45px;
+            text-align: right;
+            color: #27ae60;
+        }
+        
+        .subtotal {
+            margin: 15px 0;
+            padding: 10px;
+            background: rgba(39, 174, 96, 0.1);
+            border: 2px solid #27ae60;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .subtotal-label {
+            font-weight: bold;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #1a1a1a;
+        }
+        
+        .subtotal-score {
+            font-weight: bold;
+            font-size: 15px;
+            color: #27ae60;
+        }
+        
+        .total-score {
+            margin-top: 18px;
+            padding: 15px;
+            background: #27ae60;
+            border: 3px solid #1e8449;
+            border-radius: 5px;
+            text-align: center;
+        }
+        
+        .total-label {
+            font-size: 14px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: white;
+            margin-bottom: 5px;
+        }
+        
+        .total-value {
+            font-size: 28px;
+            font-weight: bold;
+            color: white;
+        }
+        
+        .rating {
+            font-size: 20px;
+            margin-top: 3px;
+            color: #fff3cd;
+        }
+        
+        .verdict {
+            margin-top: 15px;
+            padding: 12px;
+            background: rgba(255,255,255,0.5);
+            border: 2px solid #333;
+            border-radius: 5px;
+        }
+        
+        .verdict-text {
+            font-size: 12px;
+            font-weight: bold;
+            text-align: center;
+            color: #1a1a1a;
+            line-height: 1.5;
+        }
+        
+        .the-end {
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+            margin-top: 15px;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: #1a1a1a;
+        }
+        
+        @media (max-width: 768px) {
+            .script-container {
+                padding: 35px 25px;
+            }
+            
+            .title {
+                font-size: 28px;
+                letter-spacing: 5px;
+            }
+            
+            .holes {
+                display: none;
+            }
+            
+            .icon {
+                font-size: 24px;
+                min-width: 30px;
+            }
+            
+            .dialogue {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="script-container">
+        <div class="holes">
+            <div class="hole"></div>
+            <div class="hole"></div>
+            <div class="hole"></div>
+        </div>
+        
+        <div class="title">SCRIPT</div>
+        <div class="subtitle">Scorecard for AI Automation Potential</div>
+        <div class="scoring-guide">
+            Scoring: 0 = Not at all | 1 = Somewhat | 2 = Mostly | 3 = Completely
+        </div>
+        <div class="task-title">💥 Attacker: Vulnerability Exploitation</div>
+        
+        <div class="scene-header">ACT I: Automation Readiness</div>
+        
+        <div class="character-block">
+            <div class="icon">🔁</div>
+            <div class="character-content">
+                <div class="character">REPETITIVE</div>
+                <div class="dialogue">Same exploit against thousands of targets with identical vulnerability.</div>
+                <div class="score-bar-container">
+                    <span class="score-label">Score:</span>
+                    <div class="score-bar">
+                        <div class="score-fill" style="width: 100%;">████████████</div>
+                    </div>
+                    <span class="score-value">3/3</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="character-block">
+            <div class="icon">🎯</div>
+            <div class="character-content">
+                <div class="character">PERMISSIVE</div>
+                <div class="dialogue">Scan 100,000 systems. Exploit fails 99,999 times. One success = compromise.</div>
+                <div class="score-bar-container">
+                    <span class="score-label">Score:</span>
+                    <div class="score-bar">
+                        <div class="score-fill" style="width: 100%;">████████████</div>
+                    </div>
+                    <span class="score-value">3/3</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="character-block">
+            <div class="icon">💻</div>
+            <div class="character-content">
+                <div class="character">TECH-READY</div>
+                <div class="dialogue">Fully digital. Metasploit, exploit frameworks, automated scanners available.</div>
+                <div class="score-bar-container">
+                    <span class="score-label">Score:</span>
+                    <div class="score-bar">
+                        <div class="score-fill" style="width: 100%;">████████████</div>
+                    </div>
+                    <span class="score-value">3/3</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="subtotal">
+            <span class="subtotal-label">Act I Subtotal</span>
+            <span class="subtotal-score">9/9 ✓✓✓</span>
+        </div>
+        
+        <div class="scene-header">ACT II: Context Window Fit</div>
+        
+        <div class="character-block">
+            <div class="icon">⚡</div>
+            <div class="character-content">
+                <div class="character">SHORT</div>
+                <div class="dialogue">Exploit executes in seconds. Scan millions of targets in hours.</div>
+                <div class="score-bar-container">
+                    <span class="score-label">Score:</span>
+                    <div class="score-bar">
+                        <div class="score-fill" style="width: 100%;">████████████</div>
+                    </div>
+                    <span class="score-value">3/3</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="character-block">
+            <div class="icon">📦</div>
+            <div class="character-content">
+                <div class="character">CLOSED</div>
+                <div class="dialogue">Needs only: target IP, port, vulnerability signature. ~50 tokens.</div>
+                <div class="score-bar-container">
+                    <span class="score-label">Score:</span>
+                    <div class="score-bar">
+                        <div class="score-fill" style="width: 100%;">████████████</div>
+                    </div>
+                    <span class="score-value">3/3</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="character-block">
+            <div class="icon">🔓</div>
+            <div class="character-content">
+                <div class="character">INDEPENDENT</div>
+                <div class="dialogue">Each exploitation attempt fully independent. Perfectly parallelizable.</div>
+                <div class="score-bar-container">
+                    <span class="score-label">Score:</span>
+                    <div class="score-bar">
+                        <div class="score-fill" style="width: 100%;">████████████</div>
+                    </div>
+                    <span class="score-value">3/3</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="subtotal">
+            <span class="subtotal-label">Act II Subtotal</span>
+            <span class="subtotal-score">9/9 ✓✓✓</span>
+        </div>
+        
+        <div class="total-score">
+            <div class="total-label">Total SCRIPT Score</div>
+            <div class="total-value">18/18</div>
+            <div class="rating">⭐⭐⭐⭐⭐</div>
+        </div>
+        
+        <div class="verdict">
+            <div class="verdict-text">
+                Perfect automation candidate. AI-powered exploit frameworks scan and exploit at scale.<br>
+                What required skilled exploitation now executes automatically across millions of targets.
+            </div>
+        </div>
+        
+        <div class="the-end">— FIN —</div>
+    </div>
+</body>
+</html>

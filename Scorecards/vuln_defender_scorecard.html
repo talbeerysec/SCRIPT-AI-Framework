@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCRIPT Scorecard - Vulnerability Management (Defender)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .script-container {
+            background: #f5f5dc;
+            width: 100%;
+            max-width: 750px;
+            padding: 40px 50px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+            position: relative;
+            border: 3px solid #333;
+        }
+        
+        .holes {
+            position: absolute;
+            left: 20px;
+            top: 70px;
+            bottom: 70px;
+            width: 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+        }
+        
+        .hole {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #333;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        .title {
+            text-align: center;
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 8px;
+            color: #1a1a1a;
+        }
+        
+        .subtitle {
+            text-align: center;
+            font-size: 12px;
+            margin-bottom: 8px;
+            color: #555;
+            letter-spacing: 1px;
+        }
+        
+        .scoring-guide {
+            text-align: center;
+            font-size: 10px;
+            margin-bottom: 5px;
+            color: #666;
+            font-style: italic;
+            padding: 6px;
+            background: rgba(255,255,255,0.5);
+            border-radius: 3px;
+        }
+        
+        .task-title {
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #2980b9;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .scene-header {
+            font-weight: bold;
+            text-transform: uppercase;
+            margin: 20px 0 12px 0;
+            font-size: 13px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 4px;
+            color: #1a1a1a;
+            letter-spacing: 1px;
+        }
+        
+        .character-block {
+            margin: 10px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+        
+        .icon {
+            font-size: 26px;
+            min-width: 35px;
+            text-align: center;
+            margin-top: -3px;
+        }
+        
+        .character-content {
+            flex: 1;
+        }
+        
+        .character {
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 13px;
+            color: #2c3e50;
+            margin-bottom: 3px;
+        }
+        
+        .dialogue {
+            line-height: 1.4;
+            font-size: 11px;
+            color: #2c3e50;
+            margin-bottom: 6px;
+        }
+        
+        .score-bar-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 5px;
+        }
+        
+        .score-label {
+            font-size: 12px;
+            font-weight: bold;
+            min-width: 60px;
+            color: #555;
+        }
+        
+        .score-bar {
+            flex: 1;
+            height: 16px;
+            background: #e0e0e0;
+            border: 2px solid #333;
+            border-radius: 3px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .score-fill {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 10px;
+            color: white;
+            transition: width 0.5s ease;
+        }
+        
+        .score-fill.high {
+            background: #27ae60;
+        }
+        
+        .score-fill.medium {
+            background: #f39c12;
+        }
+        
+        .score-fill.low {
+            background: #e74c3c;
+        }
+        
+        .score-value {
+            font-weight: bold;
+            font-size: 12px;
+            min-width: 45px;
+            text-align: right;
+        }
+        
+        .score-value.high {
+            color: #27ae60;
+        }
+        
+        .score-value.medium {
+            color: #f39c12;
+        }
+        
+        .score-value.low {
+            color: #e74c3c;
+        }
+        
+        .subtotal {
+            margin: 15px 0;
+            padding: 10px;
+            border: 2px solid #333;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .subtotal.act1 {
+            background: rgba(39, 174, 96, 0.1);
+            border-color: #27ae60;
+        }
+        
+        .subtotal.act2 {
+            background: rgba(243, 156, 18, 0.1);
+            border-color: #f39c12;
+        }
+        
+        .subtotal-label {
+            font-weight: bold;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #1a1a1a;
+        }
+        
+        .subtotal-score {
+            font-weight: bold;
+            font-size: 15px;
+        }
+        
+        .subtotal-score.high {
+            color: #27ae60;
+        }
+        
+        .subtotal-score.medium {
+            color: #f39c12;
+        }
+        
+        .total-score {
+            margin-top: 18px;
+            padding: 15px;
+            background: #27ae60;
+            border: 3px solid #1e8449;
+            border-radius: 5px;
+            text-align: center;
+        }
+        
+        .total-label {
+            font-size: 14px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: white;
+            margin-bottom: 5px;
+        }
+        
+        .total-value {
+            font-size: 28px;
+            font-weight: bold;
+            color: white;
+        }
+        
+        .rating {
+            font-size: 20px;
+            margin-top: 3px;
+            color: #fff3cd;
+        }
+        
+        .verdict {
+            margin-top: 15px;
+            padding: 12px;
+            background: rgba(255,255,255,0.5);
+            border: 2px solid #333;
+            border-radius: 5px;
+        }
+        
+        .verdict-text {
+            font-size: 12px;
+            font-weight: bold;
+            text-align: center;
+            color: #1a1a1a;
+            line-height: 1.5;
+        }
+        
+        .the-end {
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+            margin-top: 15px;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: #1a1a1a;
+        }
+        
+        @media (max-width: 768px) {
+            .script-container {
+                padding: 35px 25px;
+            }
+            
+            .title {
+                font-size: 28px;
+                letter-spacing: 5px;
+            }
+            
+            .holes {
+                display: none;
+            }
+            
+            .icon {
+                font-size: 24px;
+                min-width: 30px;
+            }
+            
+            .dialogue {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="script-container">
+        <div class="holes">
+            <div class="hole"></div>
+            <div class="hole"></div>
+            <div class="hole"></div>
+        </div>
+        
+        <div class="title">SCRIPT</div>
+        <div class="subtitle">Scorecard for AI Automation Potential</div>
+        <div class="scoring-guide">
+            Scoring: 0 = Not at all | 1 = Somewhat | 2 = Mostly | 3 = Completely
+        </div>
+        <div class="task-title">🛡️ Defender: Vulnerability Management</div>
+        
+        <div class="scene-header">ACT I: Automation Readiness</div>
+        
+        <div class="character-block">
+            <div class="icon">🔁</div>
+            <div class="character-content">
+                <div class="character">REPETITIVE</div>
+                <div class="dialogue">Scan thousands of systems repeatedly. Pattern recognition across CVE databases.</div>
+                <div class="score-bar-container">
+                    <span class="score-label">Score:</span>
+                    <div class="score-bar">
+                        <div class="score-fill high" style="width: 100%;">████████████</div>
+                    </div>
+                    <span class="score-value high">3/3</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="character-block">
+            <div class="icon">🎯</div>
+            <div class="character-content">
+                <div class="character">PERMISSIVE</div>
+                <div class="dialogue">Can prioritize by risk. False positives tolerable. But missing critical vulns = breach.</div>
+                <div class="score-bar-container">
+                    <span class="score-label">Score:</span>
+                    <div class="score-bar">
+                        <div class="score-fill medium" style="width: 66%;">████████</div>
+                    </div>
+                    <span class="score-value medium">2/3</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="character-block">
+            <div class="icon">💻</div>
+            <div class="character-content">
+                <div class="character">TECH-READY</div>
+                <div class="dialogue">Fully digital. Vulnerability scanners, patch management, CVSS scoring available.</div>
+                <div class="score-bar-container">
+                    <span class="score-label">Score:</span>
+                    <div class="score-bar">
+                        <div class="score-fill high" style="width: 100%;">████████████</div>
+                    </div>
+                    <span class="score-value high">3/3</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="subtotal act1">
+            <span class="subtotal-label">Act I Subtotal</span>
+            <span class="subtotal-score high">8/9 ✓✓✓</span>
+        </div>
+        
+        <div class="scene-header">ACT II: Context Window Fit</div>
+        
+        <div class="character-block">
+            <div class="icon">⚡</div>
+            <div class="character-content">
+                <div class="character">SHORT</div>
+                <div class="dialogue">Scans run in minutes. But full cycle (scan, prioritize, patch, verify) takes weeks.</div>
+                <div class="score-bar-container">
+                    <span class="score-label">Score:</span>
+                    <div class="score-bar">
+                        <div class="score-fill medium" style="width: 66%;">████████</div>
+                    </div>
+                    <span class="score-value medium">2/3</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="character-block">
+            <div class="icon">📦</div>
+            <div class="character-content">
+                <div class="character">CLOSED</div>
+                <div class="dialogue">Needs: asset criticality, patch compatibility, business impact, dependencies, threat intel.</div>
+                <div class="score-bar-container">
+                    <span class="score-label">Score:</span>
+                    <div class="score-bar">
+                        <div class="score-fill low" style="width: 33%;">████</div>
+                    </div>
+                    <span class="score-value low">1/3</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="character-block">
+            <div class="icon">🔓</div>
+            <div class="character-content">
+                <div class="character">INDEPENDENT</div>
+                <div class="dialogue">Scanning parallelizable. But prioritization and patching require dependency analysis.</div>
+                <div class="score-bar-container">
+                    <span class="score-label">Score:</span>
+                    <div class="score-bar">
+                        <div class="score-fill medium" style="width: 66%;">████████</div>
+                    </div>
+                    <span class="score-value medium">2/3</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="subtotal act2">
+            <span class="subtotal-label">Act II Subtotal</span>
+            <span class="subtotal-score medium">5/9 ✓✓○</span>
+        </div>
+        
+        <div class="total-score">
+            <div class="total-label">Total SCRIPT Score</div>
+            <div class="total-value">13/18</div>
+            <div class="rating">⭐⭐⭐⭐</div>
+        </div>
+        
+        <div class="verdict">
+            <div class="verdict-text">
+                Strong automation candidate. AI excels at scanning and basic prioritization (Act I: 8/9).<br>
+                Best defender score yet! Context needs (Act II: 5/9) manageable with asset databases and threat intel feeds.
+            </div>
+        </div>
+        
+        <div class="the-end">— FIN —</div>
+    </div>
+</body>
+</html>
