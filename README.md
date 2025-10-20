@@ -1,6 +1,8 @@
 # The  SCRIPT framework for AI's impact evaluation
 We present the SCRIPT framework, formalized from Karpathy’s heuristic, for evaluating AI’s impact on any domain. We then apply it to the information security domain
 
+![The SCRIPT framework](/image/The%20SCRIPT%20framework.png)
+
 
 
 
