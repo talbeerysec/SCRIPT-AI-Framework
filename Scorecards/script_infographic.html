@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCRIPT Framework</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .script-container {
+            background: #f5f5dc;
+            width: 100%;
+            max-width: 850px;
+            padding: 50px 60px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+            position: relative;
+            border: 3px solid #333;
+        }
+        
+        .holes {
+            position: absolute;
+            left: 20px;
+            top: 70px;
+            bottom: 70px;
+            width: 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+        }
+        
+        .hole {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #333;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        .title {
+            text-align: center;
+            font-size: 48px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 12px;
+            color: #1a1a1a;
+        }
+        
+        .subtitle {
+            text-align: center;
+            font-size: 13px;
+            margin-bottom: 35px;
+            color: #555;
+            letter-spacing: 1px;
+            line-height: 1.4;
+        }
+        
+        .scene-header {
+            font-weight: bold;
+            text-transform: uppercase;
+            margin: 25px 0 15px 0;
+            font-size: 14px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 5px;
+            color: #1a1a1a;
+            letter-spacing: 2px;
+        }
+        
+        .character-block {
+            margin: 12px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+        
+        .icon {
+            font-size: 32px;
+            min-width: 40px;
+            text-align: center;
+            margin-top: -5px;
+        }
+        
+        .character-content {
+            flex: 1;
+        }
+        
+        .character {
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 15px;
+            color: #2c3e50;
+            margin-bottom: 3px;
+        }
+        
+        .dialogue {
+            line-height: 1.5;
+            font-size: 13px;
+            color: #2c3e50;
+        }
+        
+        .verdict {
+            margin-top: 25px;
+            padding: 15px;
+            background: rgba(255,255,255,0.5);
+            border: 2px solid #333;
+            border-radius: 5px;
+        }
+        
+        .verdict-text {
+            font-size: 14px;
+            font-weight: bold;
+            text-align: center;
+            color: #1a1a1a;
+            line-height: 1.6;
+        }
+        
+        .the-end {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 25px;
+            text-transform: uppercase;
+            letter-spacing: 6px;
+            color: #1a1a1a;
+        }
+        
+        @media (max-width: 768px) {
+            .script-container {
+                padding: 35px 25px;
+            }
+            
+            .title {
+                font-size: 32px;
+                letter-spacing: 6px;
+            }
+            
+            .subtitle {
+                font-size: 11px;
+            }
+            
+            .holes {
+                display: none;
+            }
+            
+            .icon {
+                font-size: 24px;
+                min-width: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="script-container">
+        <div class="holes">
+            <div class="hole"></div>
+            <div class="hole"></div>
+            <div class="hole"></div>
+        </div>
+        
+        <div class="title">THE SCRIPT</div>
+        <div class="subtitle">A Framework for Assessing AI Automation Potential<br>in Any Domain</div>
+        
+        <div class="scene-header">ACT I: Automation Readiness</div>
+        
+        <div class="character-block">
+            <div class="icon">🔁</div>
+            <div class="character-content">
+                <div class="character">REPETITIVE</div>
+                <div class="dialogue">Does this task repeat? Can AI learn patterns through repetition?</div>
+            </div>
+        </div>
+        
+        <div class="character-block">
+            <div class="icon">🎯</div>
+            <div class="character-content">
+                <div class="character">PERMISSIVE</div>
+                <div class="dialogue">Can we tolerate errors? Is trial-and-error acceptable?</div>
+            </div>
+        </div>
+        
+        <div class="character-block">
+            <div class="icon">💻</div>
+            <div class="character-content">
+                <div class="character">TECH-READY</div>
+                <div class="dialogue">Is it digital and automatable with current technology?</div>
+            </div>
+        </div>
+        
+        <div class="scene-header">ACT II: Context Window Fit</div>
+        
+        <div class="character-block">
+            <div class="icon">⚡</div>
+            <div class="character-content">
+                <div class="character">SHORT</div>
+                <div class="dialogue">Does it complete quickly with minimal data generation?</div>
+            </div>
+        </div>
+        
+        <div class="character-block">
+            <div class="icon">📦</div>
+            <div class="character-content">
+                <div class="character">CLOSED</div>
+                <div class="dialogue">Does it need minimal background context and history?</div>
+            </div>
+        </div>
+        
+        <div class="character-block">
+            <div class="icon">🔓</div>
+            <div class="character-content">
+                <div class="character">INDEPENDENT</div>
+                <div class="dialogue">Does it stand alone without correlating other information?</div>
+            </div>
+        </div>
+        
+        <div class="verdict">
+            <div class="verdict-text">
+                Tasks scoring HIGH on SCRIPT automate quickly.<br>
+                Tasks scoring LOW resist automation or need human oversight.<br>
+                The framework reveals why AI transforms some domains rapidly while others remain unchanged.
+            </div>
+        </div>
+        
+        <div class="the-end">— FIN —</div>
+    </div>
+</body>
+</html>
