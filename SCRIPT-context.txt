@@ -1,0 +1,23 @@
+AI researcher Andrej Karpathy analyzed why Hinton’s prediction failed and identified characteristics that determine whether AI will thrive in a field.
+Karpathy’s tweet: The source of the SCRIPT Framework
+When looking for jobs that will change a lot due to AI on shorter time scales, I’d look in other places — jobs that look like repetition of one rote task, each task being relatively independent, closed (not requiring too much context), short (in time), forgiving (the cost of mistake is low), and of course automatable giving current (and digital) capability.
+Distilling and formalizing Karpathy’s heuristic into its principal components yields the SCRIPT Framework for evaluating tasks’ suitability for AI automation:
+Short: brief in time
+Closed: requires limited context
+Repetitive: repetition of one rote task
+Independent: standalone
+Permissive: forgiving of mistakes
+Tech-ready: digitally automatable
+The Two Dimensions of SCRIPT
+SCRIPT’s six elements measure two fundamentally different aspects of AI automation feasibility:
+1. Automation Readiness (R, P, T): Is this task suitable for automation at all?
+Repetitive: Enables pattern learning
+Permissive: Tolerates trial-and-error
+Tech-ready: Digitally automatable
+Tasks that are unique, require perfect accuracy, or involve physical components resist all automation, AI based or others.
+2. Context Window Fit (S, C, I): Can this fit in an AI’s limited memory?
+Short: Minimal data volume
+Closed: Little background needed
+Independent: No accumulated state
+Tasks requiring extensive history, correlating thousands of events, or building context over time will overflow AI’s constraints.
+
